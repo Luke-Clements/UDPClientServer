@@ -2,7 +2,6 @@
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
-import java.util.Date;
 import java.util.Scanner;
 
 /*
@@ -13,9 +12,10 @@ import java.util.Scanner;
 
 /**
  *
- * @author lukecjm
+ * @author Luke Clements and Ryan Cole
  */
-public class EchoServerClient {
+public class EchoServerClient 
+{
     public static void main( String args[] ) throws Exception 
     {   
         InetAddress address;
@@ -43,14 +43,18 @@ public class EchoServerClient {
                     break;
                 }
 
-                dsock = new DatagramSocket(portNumber);
+                //sets up the socket with UDP protocol
+                dsock = new DatagramSocket();
 
-                //converts message into byte array for UDP protocol
+                //converts message into byte array for UDP protocol and sets up the packet to be sent
                 byte bytes[] = messageSent.getBytes( );  
                 DatagramPacket dpack = new DatagramPacket(bytes, bytes.length, address, portNumber);
-                dsock.send(dpack);                                   // send the packet
+                
+                //sends the packet
+                dsock.send(dpack);
 
-                dsock.receive(dpack);                                // receive the packet
+                //receives a response packet and prints that message
+                dsock.receive(dpack);
                 messageRec = new String(dpack.getData( ));
                 System.out.println(messageRec);
             }
@@ -62,7 +66,6 @@ public class EchoServerClient {
         catch(Exception e)
         {
             System.out.println("Non-integer port number");
-            return;
         }
     }
 }
